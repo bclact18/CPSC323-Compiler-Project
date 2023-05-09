@@ -206,9 +206,9 @@ int lexerAnalysis(std::string& arg) {
             cache = "";
         }
     }
-    std::cout << "\n\nOutput File is stored in [" << fileName << "]" << std::endl;
+    std::cout << "\nOutput File is stored in [" << fileName << "]\n" << std::endl;
 
-    std::cout << "Lexer Executed Successfully" << std::endl;
+    std::cout << "Lexer Analysis Executed Successfully\n" << std::endl;
     return 0;
 }
 //-------------------------------------------------------
@@ -216,9 +216,9 @@ int lexerAnalysis(std::string& arg) {
 
 //Symbol Table
 struct{
-	int addr;
-	std::string id;
-	std::string type;
+	int addr = 0;
+	std::string id = "";
+	std::string type = "";
 }symbolTable[1000];
 int currAddrSymbol = 0;
 const int offset = 5000;
@@ -242,9 +242,9 @@ void fillType(std::string type){
 
 //Instruction Table
 struct {
-    int addr;
-    std::string op;
-    std::string oprnd;
+    int addr = 0;
+    std::string op = "";
+    std::string oprnd = "";
 }instructionTable[1000];
 int currAddrInstruction = 0;
 void gen_instr(std::string op, std::string oprnd = "") {
@@ -716,7 +716,6 @@ int assign() {
     if (tok.compare("Identifier") == 0) {
         if(debug)std::cout << "Token: " << tok<<"\t\tLexeme: " << lex << std::endl;
         save = lex;
-        std::cout << save << std::endl;
         lexer();
     }
     else {
@@ -802,7 +801,6 @@ int ifState2() {
         gen_instr("LABEL");
         pop_jumpstack(currAddrInstruction);
         push_jumpstack(currAddrInstruction-2);
-        std::cout << "debug: " << currAddrInstruction - 2 << std::endl;
         lexer();
     }
     else {
@@ -1138,7 +1136,7 @@ int primary() {
     else if (lex.compare("false") == 0) {
         if(debug)std::cout << "\t<Primary> -> false" << std::endl;
         if(debug)std::cout << "Token: " << tok<<"\t\tLexeme: " << lex << std::endl;
-        gen_instr("PUSHI", 0);
+        gen_instr("PUSHI", "0");
         lexer();
     }
     else if (tok.compare("Identifier") == 0) {
@@ -1222,7 +1220,9 @@ int main(int argc, char *argv[]) {
     //Total of one argument.
     if (argc < 2 || argc > 3) {
         std::cout << "Please Include the input file as first argument" << std::endl;
-        std::cout << "Usage: ./compiler <input file>" << std::endl;
+        std::cout << "Usage: ./compiler <input file> <option>" << std::endl;
+        std::cout << "      <option>" << std::endl;
+        std::cout << "      --debug" << std::endl;
         return -1;
     }
     if (argc == 3){
@@ -1244,13 +1244,13 @@ int main(int argc, char *argv[]) {
     int error_code = rat23();
     
     if (error_code == 0) {
-        std::cout << "Syntax Analysis executed Successfully" << std::endl;
+        std::cout << "Syntax Analysis executed Successfully\n" << std::endl;
     }
     else {
         std::cout << "\tFound '" << lex << "' Instead" << std::endl;
         std::cout << "Error Occured, Error Code = " << error_code << std::endl;
     }
-	std::cout << "\nSymbol Table\nIdentifier\tMemoryLocation\tType" << std::endl;
+	std::cout << "Symbol Table\nIdentifier\tMemoryLocation\tType" << std::endl;
     for(int i = 0; i < currAddrSymbol; i++){
 		std::cout << symbolTable[i].id << "\t\t" << symbolTable[i].addr << "\t\t" << symbolTable[i].type << std::endl;
     }
