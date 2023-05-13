@@ -127,10 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="syntaxDonaldWilliamBryceSection1.cpp" />
+    <None Include="zprogram.RAT23S" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="zprogram.RAT23S" />
+    <ClCompile Include="OCJDonaldWilliamBryceSection1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
